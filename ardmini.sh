@@ -2,9 +2,12 @@
 
 set -e
 
+VERSION=002
+
 SAVEIFS=$IFS
 IFS='\'
 SKIP=1
+UPDATING=true
 IGNORE=
 SELECT=
 
@@ -22,6 +25,24 @@ usage(){
   echo "-s   skip to index in source folder (1 is top of folder)"
   echo "-y   only processes the indices specified (see -n)"
   exit 0
+}
+
+update(){
+  AVAILABLE=$(curl -s -r 30-32 https://raw.githubusercontent.com/snackthyme/ardmini/master/ardmini.sh)
+  if [[ $AVAILABLE -gt $VERSION ]]
+  then
+    echo $(tput setaf 2)updating...$(tput sgr0)
+    curl -s -o $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/ardmini.sh https://raw.githubusercontent.com/snackthyme/ardmini/master/ardmini.sh
+    if [[ -s $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/ardmini.sh ]]
+    then
+      echo $(tput setaf 2)successful, run ardmini again$(tput sgr0)
+      exit 0
+    else
+      echo $(tput setaf 1)failed$(tput sgr0)
+      echo try updating later, or use -u to suppress updates
+      exit 1
+    fi
+  fi
 }
 
 while getopts ":aceihqf:n:s:y:" opt; do
@@ -82,6 +103,11 @@ done
 if [ "$(id -u)" != "0" ]; then
    echo "script must be run as root"
    exit 1
+fi
+
+if [[ $UPDATING == true ]]
+then
+  update
 fi
 
 if [[ $FILE != true ]]
