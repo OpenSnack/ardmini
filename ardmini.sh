@@ -23,6 +23,7 @@ usage(){
   echo "-n   skips the indices specified (numbers separated by commas, 1 is top of folder)"
   echo "-q   suppresses 'skipping' messages"
   echo "-s   skip to index in source folder (1 is top of folder)"
+  echo "-u   suppresses updates"
   echo "-y   only processes the indices specified (see -n)"
   exit 0
 }
