@@ -2,7 +2,7 @@
 
 set -e
 
-VERSION=002
+VERSION=003
 
 SAVEIFS=$IFS
 IFS='\'
@@ -28,7 +28,7 @@ usage(){
 }
 
 update(){
-  AVAILABLE=$(curl -s -r 30-32 https://raw.githubusercontent.com/snackthyme/ardmini/master/ardmini.sh)
+  AVAILABLE=$(curl -s -r 29-31 https://raw.githubusercontent.com/snackthyme/ardmini/master/ardmini.sh)
   if [[ $AVAILABLE -gt $VERSION ]]
   then
     echo $(tput setaf 2)updating...$(tput sgr0)
