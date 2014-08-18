@@ -2,7 +2,7 @@
 
 set -e
 
-VERSION=003
+VERSION=004
 
 SAVEIFS=$IFS
 IFS='\'
@@ -45,7 +45,7 @@ update(){
   fi
 }
 
-while getopts ":aceihqf:n:s:y:" opt; do
+while getopts ":aceihquf:n:s:y:" opt; do
   case $opt in
     a)
     COPY=true
@@ -66,6 +66,9 @@ while getopts ":aceihqf:n:s:y:" opt; do
       ;;
     q)
       NOSKIPMESSAGE=true
+      ;;
+    u)
+      UPDATING=false
       ;;
     f)
       SOURCE=$(echo $OPTARG | sed 's/\/$//;s/\/\//\//g')
