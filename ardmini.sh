@@ -2,7 +2,7 @@
 
 set -e
 
-VERSION=004
+VERSION=005
 
 SAVEIFS=$IFS
 IFS='\'
@@ -12,7 +12,7 @@ IGNORE=
 SELECT=
 
 usage(){
-  echo -e "usage: ./ardmini.sh -f path [-s index] [-aceiq]\n"
+  echo -e "usage: ./ardmini.sh -f path [-n/s/y index] [-aceiqu]\n"
   echo options:
   echo "-a   same as -cei"
   echo "-c   enables copying *.app in source to /Applications"
@@ -30,7 +30,10 @@ usage(){
 
 update(){
   AVAILABLE=$(curl -s -r 29-31 https://raw.githubusercontent.com/snackthyme/ardmini/master/ardmini.sh)
-  if [[ $AVAILABLE -gt $VERSION ]]
+  if [[ -z "$AVAILABLE" ]]
+  then
+    echo check for updates returned nothing, check internet connection
+  elif [[ $AVAILABLE -gt $VERSION ]]
   then
     echo $(tput setaf 2)updating...$(tput sgr0)
     curl -s -o $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/ardmini.sh https://raw.githubusercontent.com/snackthyme/ardmini/master/ardmini.sh
@@ -46,7 +49,7 @@ update(){
   fi
 }
 
-while getopts ":aceihquf:n:s:y:" opt; do
+while getopts ":acehiquf:n:s:y:" opt; do
   case $opt in
     a)
     COPY=true
