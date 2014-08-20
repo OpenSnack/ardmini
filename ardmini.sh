@@ -1,8 +1,6 @@
 #!/bin/bash
 
-set -e
-
-VERSION=005
+VERSION=006
 
 SAVEIFS=$IFS
 IFS='\'
@@ -32,7 +30,7 @@ update(){
   AVAILABLE=$(curl -s -r 29-31 https://raw.githubusercontent.com/snackthyme/ardmini/master/ardmini.sh)
   if [[ -z "$AVAILABLE" ]]
   then
-    echo check for updates returned nothing, check internet connection
+    echo -e "check for updates returned nothing, check internet connection\n"
   elif [[ $AVAILABLE -gt $VERSION ]]
   then
     echo $(tput setaf 2)updating...$(tput sgr0)
@@ -125,7 +123,13 @@ fi
 
 if [[ $IGNORING && $SELECTING ]] || [[ $IGNORING && $SKIPPING ]] || [[ $SELECTING && $SKIPPING ]]
 then
-  echo -e "no combination of -s, -n or -y can be used at the same time"
+  echo no combination of -s, -n or -y can be used at the same time
+  exit 1
+fi
+
+if [[ $COPY != true && $SHELL != true && $INSTALL != true ]]
+then
+  echo "no files were selected for processing, use -a/c/e/i (see -h)"
   exit 1
 fi
 
@@ -133,6 +137,8 @@ if [[ $IGNORING != true && $SELECTING != true ]]
 then
   FILTER=p
 fi
+
+set -e
 
 echo Started `date`
 find "$SOURCE" -maxdepth 1 -not -path '*/\.*' | sed '1d' | sed -n "$FILTER" | while read f; do
