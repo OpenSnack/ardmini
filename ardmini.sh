@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #legacy
-VERSION=009
+VERSION=010
 
 SAVEIFS=$IFS
 IFS='\'
