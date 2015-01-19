@@ -1,6 +1,7 @@
 #!/bin/bash
 
-VERSION=007
+#legacy
+VERSION=008
 
 SAVEIFS=$IFS
 IFS='\'
@@ -27,7 +28,7 @@ usage(){
 }
 
 update(){
-  AVAILABLE=$(curl -s -r 29-31 https://raw.githubusercontent.com/snackthyme/ardmini/master/ardmini.sh)
+  AVAILABLE=$(curl -s https://raw.githubusercontent.com/snackthyme/ardmini/master/VERSION)
   if [[ -z "$AVAILABLE" ]]
   then
     echo -e "check for updates returned nothing, check internet connection\n"
