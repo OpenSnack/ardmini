@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=006
+VERSION=007
 
 SAVEIFS=$IFS
 IFS='\'
@@ -156,7 +156,7 @@ find "$SOURCE" -maxdepth 1 -not -path '*/\.*' | sed '1d' | sed -n "$FILTER" | wh
       echo $(tput setaf 4)copying$(tput sgr0) "$f" to /Applications
       cp -R "$f" /Applications/$(basename $f)
     fi
-  elif [[ $f == *.pkg && $INSTALL == true ]]
+  elif [[ ($f == *.pkg || $f == *.mpkg) && $INSTALL == true ]]
   then
     echo $(tput setaf 4)installing$(tput sgr0) "$f"
     installer -pkg "$f" -target /
