@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #legacy
-VERSION=008
+VERSION=009
 
 SAVEIFS=$IFS
 IFS='\'
@@ -32,7 +32,7 @@ update(){
   if [[ -z "$AVAILABLE" ]]
   then
     echo -e "check for updates returned nothing, check internet connection\n"
-  elif [[ $AVAILABLE -gt $VERSION ]]
+  elif [[ 10#$AVAILABLE -gt 10#$VERSION ]]
   then
     echo $(tput setaf 2)updating...$(tput sgr0)
     curl -s -o $( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/ardmini.sh https://raw.githubusercontent.com/snackthyme/ardmini/master/ardmini.sh
